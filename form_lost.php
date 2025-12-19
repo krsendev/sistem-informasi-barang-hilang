@@ -18,7 +18,11 @@ if (!isset($_SESSION['user'])) { header("Location: login.php"); exit; }
             <span style="font-size: 30px; cursor: pointer;">&#9776;</span>
         </div>
         <div class="logo-text">BARANG HILANG</div>
-        <div class="header-icons"><span style="font-size: 24px;">👤</span></div>
+        <div class="header-icons">
+            <a href="profile.php" style="text-decoration: none;">
+                <span style="font-size: 24px; color: white;">👤</span>
+            </a>
+        </div>
     </header>
 
     <div id="mySidebar" class="sidebar">

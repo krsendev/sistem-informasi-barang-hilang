@@ -30,7 +30,9 @@ if (!isset($_SESSION['user'])) {
         </div>
 
         <div class="header-icons">
-            <span style="font-size: 24px;">👤</span>
+            <a href="profile.php" style="text-decoration: none;">
+                <span style="font-size: 24px; color: white;">👤</span>
+            </a>
         </div>
     </header>
 
