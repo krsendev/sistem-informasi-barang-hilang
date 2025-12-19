@@ -1,0 +1,50 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) { header("Location: login.php"); exit; }
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulir - UMSIDA</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo-container" onclick="openNav()">
+            <span style="font-size: 30px; cursor: pointer;">&#9776;</span>
+        </div>
+        <div class="logo-text">FORMULIR</div>
+        <div class="header-icons"><span style="font-size: 24px;">👤</span></div>
+    </header>
+
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="index.php">Beranda</a>
+        <a href="gallery.php">Galeri Temuan</a>
+        <a href="dashboard.php">Laporan Kehilangan</a>
+        <a href="form_selection.php">Formulir</a>
+        <a href="process/auth.php?action=logout" style="color: #ff6b6b;">Logout</a>
+    </div>
+
+    <div id="main">
+        <div class="form-container">
+            <h3>Apa yang ingin anda Laporkan?</h3>
+            <br>
+            
+            <a href="form_lost.php" style="text-decoration: none;">
+                <button class="btn-primary" style="margin-bottom: 20px;">Kehilangan Barang</button>
+            </a>
+            
+            <a href="form_found.php" style="text-decoration: none;">
+                <button class="btn-primary">Menemukan Barang</button>
+            </a>
+        </div>
+    </div>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
