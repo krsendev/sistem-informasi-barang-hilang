@@ -55,10 +55,10 @@ if (!isset($_SESSION['user'])) {
         <!-- Hero Section -->
         <div class="hero">
             <!-- Placeholder for building image -->
-            <div style="width: 100%; height: 200px; background: url('https://placehold.co/600x400/003366/ffffff?text=Gedung+UMSIDA') no-repeat center center; background-size: cover;"></div>
-            <div class="hero-text">
+            <div style="width: 100%; height: 200px; background: url('./images/gambar-beranda.png') no-repeat center center; background-size: cover;"></div>
+            <!-- <div class="hero-text">
                 KEHILANGAN BARANG &<br>PENEMUAN BARANG
-            </div>
+            </div> -->
         </div>
 
         <!-- Procedure: Kehilangan Barang -->
