@@ -60,78 +60,72 @@ if ($action === 'register') {
     }
 
 } elseif ($action === 'update_profile') {
-    $log = "debug_log.txt";
-    file_put_contents($log, "Action update_profile triggered\n", FILE_APPEND);
+    header('Content-Type: application/json');
+    $response = ['success' => false, 'message' => 'Unknown error'];
+    
+    // Debug log
+    $log = __DIR__ . '/debug_log.txt';
+    file_put_contents($log, "Action update_profile triggered at " . date('Y-m-d H:i:s') . "\n", FILE_APPEND);
 
     if (!isset($_SESSION['user'])) {
-        file_put_contents($log, "User not logged in\n", FILE_APPEND);
-        header("Location: ../login.php");
+        $response['message'] = 'User not logged in';
+        echo json_encode($response);
         exit;
     }
 
     $userId = $_SESSION['user']['id'];
-    file_put_contents($log, "User ID: $userId\n", FILE_APPEND);
     
     if (isset($_FILES['profile_image'])) {
-        file_put_contents($log, "File received: " . print_r($_FILES['profile_image'], true) . "\n", FILE_APPEND);
-        
         if ($_FILES['profile_image']['error'] == 0) {
             $allowed = ['jpg', 'jpeg', 'png', 'gif'];
             $filename = $_FILES['profile_image']['name'];
-            $filetype = $_FILES['profile_image']['type'];
             $filesize = $_FILES['profile_image']['size'];
             $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
-            file_put_contents($log, "File details - Name: $filename, Type: $filetype, Size: $filesize, Ext: $ext\n", FILE_APPEND);
-
             if (!in_array($ext, $allowed)) {
-                 file_put_contents($log, "Invalid format\n", FILE_APPEND);
-                 echo "<script>alert('Format file tidak valid!'); window.location='../profile.php';</script>";
+                 $response['message'] = 'Format file tidak valid (hanya jpg, jpeg, png, gif)';
+                 echo json_encode($response);
                  exit;
             }
 
-            if ($filesize > 5 * 1024 * 1024) { // 5MB limit
-                file_put_contents($log, "File too large\n", FILE_APPEND);
-                echo "<script>alert('Ukuran file terlalu besar!'); window.location='../profile.php';</script>";
+            if ($filesize > 5 * 1024 * 1024) { 
+                $response['message'] = 'Ukuran file terlalu besar (Max 5MB)';
+                echo json_encode($response);
                 exit;
             }
 
-            // Generate unique filename
             $newFilename = "profile_" . $userId . "_" . time() . "." . $ext;
-            $uploadDir = "../assets/uploads/profiles/";
+            $uploadDir = __DIR__ . '/../assets/uploads/profiles/';
             
             if (!file_exists($uploadDir)) {
-                file_put_contents($log, "Creating directory: $uploadDir\n", FILE_APPEND);
                 mkdir($uploadDir, 0777, true);
             }
 
             $destination = $uploadDir . $newFilename;
 
             if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $destination)) {
-                file_put_contents($log, "File moved to: $destination\n", FILE_APPEND);
-                // Update database
+                
                 $query = "UPDATE users SET profile_image = '$newFilename' WHERE id = '$userId'";
                 if (mysqli_query($conn, $query)) {
-                    file_put_contents($log, "Database updated\n", FILE_APPEND);
-                    // Update session
                     $_SESSION['user']['profile_image'] = $newFilename;
-                     echo "<script>alert('Foto profil berhasil diperbarui!'); window.location='../profile.php';</script>";
+                    $response['success'] = true;
+                    $response['message'] = 'Foto profil berhasil diperbarui!';
+                    $response['image_url'] = 'assets/uploads/profiles/' . $newFilename;
                 } else {
-                     file_put_contents($log, "DB Error: " . mysqli_error($conn) . "\n", FILE_APPEND);
-                     echo "<script>alert('Gagal update database!'); window.location='../profile.php';</script>";
+                     $response['message'] = 'Gagal update database: ' . mysqli_error($conn);
                 }
             } else {
-                 file_put_contents($log, "Failed to move file\n", FILE_APPEND);
-                 echo "<script>alert('Gagal upload file!'); window.location='../profile.php';</script>";
+                 $response['message'] = 'Gagal memindahkan file upload';
             }
         } else {
-            file_put_contents($log, "File upload error code: " . $_FILES['profile_image']['error'] . "\n", FILE_APPEND);
-            header("Location: ../profile.php");
+            $response['message'] = 'Error upload file code: ' . $_FILES['profile_image']['error'];
         }
     } else {
-        file_put_contents($log, "No file in request\n", FILE_APPEND);
-        header("Location: ../profile.php");
+        $response['message'] = 'Tidak ada file yang dikrim';
     }
+    
+    echo json_encode($response);
+    exit;
 
 } elseif ($action === 'logout') {
     session_destroy();

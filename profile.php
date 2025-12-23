@@ -33,7 +33,11 @@ $user = $_SESSION['user'];
         <div class="logo-text">PROFIL SAYA</div>
         <div class="header-icons">
              <a href="profile.php" style="text-decoration: none; color: white;">
-                <span style="font-size: 24px;">👤</span>
+                <?php if (!empty($user['profile_image'])): ?>
+                    <img src="assets/uploads/profiles/<?= htmlspecialchars($user['profile_image']) ?>" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid white;">
+                <?php else: ?>
+                    <span style="font-size: 24px;">👤</span>
+                <?php endif; ?>
             </a>
         </div>
     </header>
@@ -156,15 +160,13 @@ $user = $_SESSION['user'];
                     method: 'POST',
                     body: formData
                 })
-                .then(response => {
-                    // Since auth.php returns a full HTML page with alert and redirect script, 
-                    // we can't easily parse JSON. Ideally we'd change backend to JSON, 
-                    // but for minimal changes, we'll just reload.
-                    // Or we could check if response text contains "success" keywords if we were returning clean text.
-                    // Given the current backend echoes script tags, reloading the page will actually NOT show the alert 
-                    // from the backend response because that response is just discarded here.
-                    // We should trigger a reload which will show the new image.
-                    window.location.reload();
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        alert(data.message || 'Gagal update profile');
+                    }
                 })
                 .catch(error => {
                     console.error('Error:', error);
