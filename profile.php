@@ -40,9 +40,25 @@ $user = $_SESSION['user'];
     <div id="main">
         <div class="form-container">
             <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center;">
-                <div style="width: 100px; height: 100px; background: #ddd; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px;">
-                    👤
-                </div>
+                <?php 
+                $profile_img = !empty($user['profile_image']) ? 'assets/uploads/profiles/'.$user['profile_image'] : '';
+                ?>
+                <form action="process/auth.php" method="POST" enctype="multipart/form-data" id="profileForm">
+                    <input type="hidden" name="action" value="update_profile">
+                    <input type="file" name="profile_image" id="profileImageInput" style="display: none;" onchange="document.getElementById('profileForm').submit()">
+                    
+                    <div onclick="document.getElementById('profileImageInput').click()" style="width: 100px; height: 100px; background: #ddd; border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 40px; overflow: hidden; cursor: pointer; position: relative;">
+                        <?php if ($profile_img): ?>
+                            <img src="<?= htmlspecialchars($profile_img) ?>" style="width: 100%; height: 100%; object-fit: cover;">
+                        <?php else: ?>
+                            👤
+                        <?php endif; ?>
+                        
+                        <div style="position: absolute; bottom: 0; width: 100%; background: rgba(0,0,0,0.5); color: white; font-size: 12px; padding: 2px 0;">
+                            Edit
+                        </div>
+                    </div>
+                </form>
                 
                 <h2 style="margin-bottom: 5px;"><?= htmlspecialchars($user['name']) ?></h2>
                 <p style="color: #666; margin-bottom: 20px;"><?= htmlspecialchars($user['email']) ?></p>
