@@ -146,9 +146,14 @@ body {
     margin-left: 50px;
 }
 
+/* Main Content Wrapper */
 #main {
     transition: margin-left .3s;
-    padding: 16px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    /* Center main content on large screens */
+    width: 100%;
 }
 
 /* Hero Section */
@@ -157,12 +162,16 @@ body {
     text-align: center;
     color: white;
     margin-bottom: 2rem;
+    border-radius: 15px;
+    overflow: hidden;
+    /* Round corners for hero */
 }
 
 .hero img {
     width: 100%;
     height: auto;
     filter: brightness(0.7);
+    object-fit: cover;
 }
 
 .hero-text {
@@ -174,6 +183,7 @@ body {
     font-size: 1.5rem;
     text-transform: uppercase;
     width: 90%;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Cards / Procedures */
@@ -183,83 +193,24 @@ body {
     border-radius: 15px;
     margin-bottom: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    /* Constrain width */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.procedure-title {
-    font-weight: bold;
-    font-size: 1.1rem;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-}
-
-button.btn-primary {
-    background-color: var(--primary-blue);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    width: 100%;
-}
-
-/* Gallery Grid */
-/* Gallery Grid */
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.gallery-item {
-    background: var(--light-gray);
-    border-radius: 12px;
-    overflow: hidden;
-    text-align: left;
-    /* Better for text reading */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    /* Full height of grid cell */
-}
-
-.gallery-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 220px;
-    /* Fixed height for consistency */
-    object-fit: cover;
-    background-color: #ddd;
-    border-bottom: 1px solid #eee;
-}
-
-.item-info {
-    padding: 10px;
-    text-align: left;
-}
-
-.item-tag {
-    display: inline-block;
-    font-size: 0.8rem;
-    background: #ddd;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-top: 5px;
-}
+/* ... existing code ... */
 
 /* Forms */
 .form-container {
-    padding: 1rem;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    /* Subtle shadow for form card */
+    max-width: 600px;
+    /* Center and restrict form width */
+    margin: 2rem auto;
 }
 
 .form-group {
