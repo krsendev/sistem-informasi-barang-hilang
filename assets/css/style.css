@@ -27,37 +27,38 @@ body {
 .header {
     background-color: var(--primary-blue);
     color: var(--white);
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 5%;
+    /* Adjusted padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    height: 70px;
+    /* Fixed height for consistency */
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
-/* Mobile Only Hamburger */
+/* Mobile Icon (Hamburger) */
 .hamburger {
     display: block;
     cursor: pointer;
     font-size: 24px;
+    color: white;
 }
 
 .logo-text img {
     height: 40px;
     width: auto;
     transition: transform 0.3s;
-}
-
-.logo-text img:hover {
-    transform: scale(1.05);
+    display: block;
 }
 
 .header-icons {
@@ -66,45 +67,46 @@ body {
     align-items: center;
 }
 
-/* Desktop Navbar */
+/* Desktop Navbar - Styled */
 .desktop-nav {
     display: none;
-    /* Hidden by default (mobile) */
+    gap: 30px;
+    height: 100%;
+    align-items: center;
 }
 
 .desktop-nav a {
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
-    margin: 0 15px;
     font-weight: 500;
-    font-size: 0.95rem;
-    transition: color 0.3s, border-bottom 0.3s;
-    padding-bottom: 5px;
-    border-bottom: 2px solid transparent;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
 }
 
 .desktop-nav a:hover,
 .desktop-nav a.active {
-    color: var(--white);
-    border-bottom: 2px solid var(--accent-orange);
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-weight: 600;
 }
 
 /* Media Query for Desktop */
 @media (min-width: 769px) {
     .hamburger {
+        display: none !important;
+        /* Force hide on desktop */
+    }
+
+    .logo-container .hamburger {
         display: none;
-        /* Hide hamburger on desktop */
+        /* Double check to hide if nested */
     }
 
     .desktop-nav {
         display: flex;
-        /* Show nav on desktop */
-        align-items: center;
-    }
-
-    .header {
-        justify-content: space-between;
-        /* Logo - Nav - Profile */
     }
 }
 
