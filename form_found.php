@@ -81,7 +81,7 @@ if (!isset($_SESSION['user'])) { header("Location: login.php"); exit; }
                 </div>
 
                 <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button type="button" class="btn-primary" style="background: gray;" onclick="window.history.back()">Kembali</button>
+                    <button type="button" class="btn-primary" style="background: #ff6b6b;" onclick="window.history.back()">Kembali</button>
                     <button type="submit" class="btn-primary">Kirim</button>
                 </div>
             </form>

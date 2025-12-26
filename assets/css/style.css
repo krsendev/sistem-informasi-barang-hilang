@@ -144,6 +144,8 @@ body {
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+    border: none;
+    /* Remove underline/border */
 }
 
 /* Main Content Wrapper */
