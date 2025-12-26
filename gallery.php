@@ -72,7 +72,7 @@ $result = mysqli_query($conn, $query);
         <nav class="desktop-nav">
              <a href="index.php">Beranda</a>
              <a href="gallery.php" class="active">Galeri Temuan</a>
-             <a href="dashboard.php">Laporan Kehilangan</a>
+             <a href="lost_items.php">Laporan Kehilangan</a>
              <a href="form_selection.php">Formulir</a>
         </nav>
 
@@ -87,7 +87,7 @@ $result = mysqli_query($conn, $query);
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="index.php">Beranda</a>
         <a href="gallery.php">Galeri Temuan</a>
-        <a href="dashboard.php">Laporan Kehilangan</a>
+        <a href="lost_items.php">Laporan Kehilangan</a>
         <a href="form_selection.php">Formulir</a>
         <a href="process/auth.php?action=logout" style="color: #ff6b6b;">Logout</a>
     </div>
@@ -115,9 +115,9 @@ $result = mysqli_query($conn, $query);
             
             <div class="modal-details">
                 <div class="detail-box">
-                    <ul style="padding-left: 20px;" id="modalDesc">
+                    <p style="margin: 0;" id="modalDesc">
                         <!-- Description populated by JS -->
-                    </ul>
+                    </p>
                 </div>
                 
                 <div class="detail-box">
@@ -146,7 +146,7 @@ $result = mysqli_query($conn, $query);
             document.getElementById('modalImg').src = item.image ? 'uploads/' + item.image : 'https://placehold.co/150x150?text=No+Image';
             
             // Format simple description list
-            document.getElementById('modalDesc').innerHTML = `<li>${item.description}</li>`;
+            document.getElementById('modalDesc').innerText = item.description;
             
             // Format Date dd/mm/yyyy
             if (item.found_date) {

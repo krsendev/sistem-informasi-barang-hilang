@@ -29,7 +29,7 @@ $result = mysqli_query($conn, $query);
         <nav class="desktop-nav">
              <a href="index.php">Beranda</a>
              <a href="gallery.php">Galeri Temuan</a>
-             <a href="dashboard.php" class="active">Laporan Kehilangan</a>
+             <a href="lost_items.php" class="active">Laporan Kehilangan</a>
              <a href="form_selection.php">Formulir</a>
         </nav>
 
@@ -44,7 +44,7 @@ $result = mysqli_query($conn, $query);
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="index.php">Beranda</a>
         <a href="gallery.php">Galeri Temuan</a>
-        <a href="dashboard.php">Laporan Kehilangan</a>
+        <a href="lost_items.php">Laporan Kehilangan</a>
         <a href="form_selection.php">Formulir</a>
         <a href="process/auth.php?action=logout" style="color: #ff6b6b;">Logout</a>
     </div>
@@ -52,28 +52,45 @@ $result = mysqli_query($conn, $query);
     <div id="main">
         <div style="padding: 10px;">
             <?php while($item = mysqli_fetch_assoc($result)): ?>
-                <div class="procedure-card" style="background: white; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; display: flex; align-items: start; gap: 15px;">
-                     <div style="width: 5px; height: 100px; background-color: <?= $item['type'] == 'found' ? 'green' : 'red' ?>; border-radius: 5px;"></div>
-                     
-                     <div style="flex-grow: 1;">
-                        <h4 style="margin-bottom: 5px; color: var(--primary-blue);">Laporan <?= ucfirst($item['type'] == 'found' ? 'Penemuan' : 'Kehilangan') ?> - <?= htmlspecialchars($item['item_name']) ?> <small style="color: #666; font-size: 12px;">oleh <?= htmlspecialchars($item['pelapor_name'] ?? 'Unknown') ?></small></h4>
-                        
-                        <div style="font-size: 0.85rem; color: #555; display: flex; gap: 15px;">
-                            <div style="flex: 1;">
-                                <ul>
-                                    <li><b>Deskripsi:</b> <?= htmlspecialchars($item['description']) ?></li>
-                                    <li><b>Lokasi:</b> <?= htmlspecialchars($item['location']) ?></li>
-                                    <li><b>Tanggal:</b> <?= date('d/m/Y', strtotime($item['found_date'])) ?></li>
-                                    <li><b>Kontak:</b> <?= htmlspecialchars($item['contact_phone']) ?></li>
-                                </ul>
-                            </div>
-                            <?php if(!empty($item['image'])): ?>
-                            <div>
-                                <img src="uploads/<?= $item['image'] ?>" alt="Foto Barang" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
-                            </div>
-                            <?php endif; ?>
+                <div style="background-color: #0c2e59; color: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); position: relative;">
+                    
+                    <h3 style="text-align: center; margin-bottom: 20px; font-weight: bold; font-size: 1.3rem;">Laporan <?= ucfirst($item['type'] == 'found' ? 'Penemuan' : 'Kehilangan') ?> <?= htmlspecialchars($item['item_name']) ?></h3>
+                    
+                    <div style="font-size: 0.95rem; line-height: 1.8;">
+                        <div>
+                            Nama barang: <?= htmlspecialchars($item['item_name']) ?>
                         </div>
-                     </div>
+                        
+                        <div style="margin-top: 5px;">
+                            Ciri-ciri:<br>
+                            <span style="display: block; padding-left: 10px; color: #e0e0e0;">
+                                <?= nl2br(htmlspecialchars($item['description'])) ?>
+                            </span>
+                        </div>
+
+                        <div style="margin-top: 5px;">
+                            Waktu <?= $item['type'] == 'found' ? 'Ditemukan' : 'Kehilangan' ?>:<br>
+                            <span style="padding-left: 10px; color: #e0e0e0;">
+                                <?= date('l, d F Y', strtotime($item['found_date'])) ?>
+                                <!-- Jam tidak tersedia di database, skip -->
+                            </span>
+                        </div>
+
+                        <div style="margin-top: 5px;">
+                            Lokasi terakhir: <?= htmlspecialchars($item['location']) ?>
+                        </div>
+
+                        <div style="margin-top: 5px;">
+                            Hubungi: <?= htmlspecialchars($item['pelapor_name']) ?> / <?= htmlspecialchars($item['contact_phone']) ?>
+                        </div>
+                    </div>
+
+                    <?php if(!empty($item['image'])): ?>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <img src="uploads/<?= $item['image'] ?>" alt="Foto Barang" style="max-width: 100%; height: auto; max-height: 200px; border-radius: 10px; border: 2px solid rgba(255,255,255,0.2);">
+                    </div>
+                    <?php endif; ?>
+
                 </div>
             <?php endwhile; ?>
             

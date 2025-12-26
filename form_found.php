@@ -25,7 +25,7 @@ if (!isset($_SESSION['user'])) { header("Location: login.php"); exit; }
         <nav class="desktop-nav">
              <a href="index.php">Beranda</a>
              <a href="gallery.php">Galeri Temuan</a>
-             <a href="dashboard.php">Laporan Kehilangan</a>
+             <a href="lost_items.php">Laporan Kehilangan</a>
              <a href="form_selection.php" class="active">Formulir</a>
         </nav>
 
@@ -40,7 +40,7 @@ if (!isset($_SESSION['user'])) { header("Location: login.php"); exit; }
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="index.php">Beranda</a>
         <a href="gallery.php">Galeri Temuan</a>
-        <a href="dashboard.php">Laporan Kehilangan</a>
+        <a href="lost_items.php">Laporan Kehilangan</a>
         <a href="form_selection.php">Formulir</a>
         <a href="process/auth.php?action=logout" style="color: #ff6b6b;">Logout</a>
     </div>
