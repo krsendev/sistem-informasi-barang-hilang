@@ -357,8 +357,12 @@ button.btn-primary:hover {
     transition: border 0.3s;
 }
 
-.auth-card input:focus {
-    border-color: var(--primary-blue);
-    outline: none;
-    background: white;
+
+/* Mobile Specific: Center Logo */
+@media (max-width: 768px) {
+    .logo-text {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
