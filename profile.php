@@ -75,7 +75,7 @@ $user = $_SESSION['user'];
                 <div style="text-align: left; border-top: 1px solid #eee; padding-top: 20px;">
                     <div class="form-group">
                         <label>Role</label>
-                        <input type="text" value="<?= htmlspecialchars($user['role']) ?>" disabled>
+                        <input type="text" value="<?= !empty($user['role']) ? htmlspecialchars($user['role']) : 'Mahasiswa' ?>" disabled>
                     </div>
                 </div>
 
