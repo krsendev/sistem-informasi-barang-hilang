@@ -48,13 +48,20 @@ $result = mysqli_query($conn, $query);
                      <div style="flex-grow: 1;">
                         <h4 style="margin-bottom: 5px; color: var(--primary-blue);">Laporan <?= ucfirst($item['type'] == 'found' ? 'Penemuan' : 'Kehilangan') ?> - <?= htmlspecialchars($item['item_name']) ?> <small style="color: #666; font-size: 12px;">oleh <?= htmlspecialchars($item['pelapor_name'] ?? 'Unknown') ?></small></h4>
                         
-                        <div style="font-size: 0.85rem; color: #555;">
-                            <ul>
-                                <li><b>Deskripsi:</b> <?= htmlspecialchars($item['description']) ?></li>
-                                <li><b>Lokasi:</b> <?= htmlspecialchars($item['location']) ?></li>
-                                <li><b>Tanggal:</b> <?= htmlspecialchars($item['found_date']) ?></li>
-                                <li><b>Kontak:</b> <?= htmlspecialchars($item['contact_phone']) ?></li>
-                            </ul>
+                        <div style="font-size: 0.85rem; color: #555; display: flex; gap: 15px;">
+                            <div style="flex: 1;">
+                                <ul>
+                                    <li><b>Deskripsi:</b> <?= htmlspecialchars($item['description']) ?></li>
+                                    <li><b>Lokasi:</b> <?= htmlspecialchars($item['location']) ?></li>
+                                    <li><b>Tanggal:</b> <?= htmlspecialchars($item['found_date']) ?></li>
+                                    <li><b>Kontak:</b> <?= htmlspecialchars($item['contact_phone']) ?></li>
+                                </ul>
+                            </div>
+                            <?php if(!empty($item['image'])): ?>
+                            <div>
+                                <img src="uploads/<?= $item['image'] ?>" alt="Foto Barang" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd;">
+                            </div>
+                            <?php endif; ?>
                         </div>
                      </div>
                 </div>
