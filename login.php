@@ -28,7 +28,7 @@ if (isset($_SESSION['user'])) {
             <input type="hidden" name="action" value="login">
             
             <div class="form-group">
-                <input type="email" name="email" placeholder="Email / NIM" required>
+                <input type="text" name="email" placeholder="Email / NIM" required>
             </div>
 
             <div class="form-group">

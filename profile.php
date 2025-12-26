@@ -59,6 +59,7 @@ $user = $_SESSION['user'];
                 </div>
                 
                 <h2 style="margin-bottom: 5px;"><?= htmlspecialchars($user['name']) ?></h2>
+                <p style="color: #666; margin-bottom: 5px; font-weight: bold;"><?= isset($user['nim']) ? htmlspecialchars($user['nim']) : '-' ?></p>
                 <p style="color: #666; margin-bottom: 20px;"><?= htmlspecialchars($user['email']) ?></p>
                 
                 <div style="text-align: left; border-top: 1px solid #eee; padding-top: 20px;">

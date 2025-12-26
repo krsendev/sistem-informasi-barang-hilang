@@ -30,6 +30,10 @@ if (isset($_SESSION['user'])) {
             </div>
 
             <div class="form-group">
+                <input type="text" name="nim" placeholder="NIM" required>
+            </div>
+
+            <div class="form-group">
                 <input type="email" name="email" placeholder="Email" required>
             </div>
 

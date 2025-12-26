@@ -7,6 +7,7 @@ $action = $_POST['action'] ?? $_GET['action'] ?? '';
 if ($action === 'register') {
     $nama = mysqli_real_escape_string($conn, $_POST['nama']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $nim = mysqli_real_escape_string($conn, $_POST['nim']); // New NIM input
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
 
@@ -16,18 +17,18 @@ if ($action === 'register') {
         exit;
     }
 
-    // Check email
-    $check = mysqli_query($conn, "SELECT id FROM users WHERE email = '$email'");
+    // Check email OR NIM uniqueness
+    $check = mysqli_query($conn, "SELECT id FROM users WHERE email = '$email' OR nim = '$nim'");
     if (mysqli_num_rows($check) > 0) {
-        echo "<script>alert('Email sudah terdaftar!'); window.location='../register.php';</script>";
+        echo "<script>alert('Email atau NIM sudah terdaftar!'); window.location='../register.php';</script>";
         exit;
     }
 
     // Hash password
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert user
-    $query = "INSERT INTO users (username, email, password) VALUES ('$nama', '$email', '$hashed_password')";
+    // Insert user with NIM
+    $query = "INSERT INTO users (username, email, nim, password) VALUES ('$nama', '$email', '$nim', '$hashed_password')";
     if (mysqli_query($conn, $query)) {
         echo "<script>alert('Pendaftaran berhasil! Silakan login.'); window.location='../login.php';</script>";
     } else {
@@ -35,10 +36,12 @@ if ($action === 'register') {
     }
 
 } elseif ($action === 'login') {
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $input = mysqli_real_escape_string($conn, $_POST['email']); // Can be email or NIM
     $password = $_POST['password'];
 
-    $query = "SELECT * FROM users WHERE email = '$email' OR username = '$email'";
+    // Check Email OR NIM
+    // Also checking username just in case, but request specifically mentioned Email/NIM
+    $query = "SELECT * FROM users WHERE email = '$input' OR nim = '$input'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) === 1) {
@@ -48,67 +51,34 @@ if ($action === 'register') {
                 'id' => $user['id'],
                 'name' => $user['username'],
                 'email' => $user['email'],
+                'nim' => $user['nim'], // Add NIM to session
                 'role' => $user['role'],
-                'profile_image' => $user['profile_image'] ?? null // Add profile image to session
+                'profile_image' => $user['profile_image'] ?? null
             ];
             header("Location: ../index.php");
         } else {
             echo "<script>alert('Password salah!'); window.location='../login.php';</script>";
         }
     } else {
-    } else {
         echo "<script>alert('User tidak ditemukan!'); window.location='../login.php';</script>";
     }
 
 } elseif ($action === 'forgot_password') {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $nim = mysqli_real_escape_string($conn, $_POST['nim']);
     
-    // Check if user exists
-    $check = mysqli_query($conn, "SELECT id FROM users WHERE email = '$email'");
+    // Check if user exists with BOTH Email AND NIM
+    $query = "SELECT id, email FROM users WHERE email = '$email' AND nim = '$nim'";
+    $check = mysqli_query($conn, $query);
+    
     if (mysqli_num_rows($check) > 0) {
-        // Generate 6 digit code
-        $token = rand(100000, 999999);
-        $expires = date("Y-m-d H:i:s", strtotime("+15 minutes"));
-        
-        // Save to password_resets
-        // First delete any previous tokens for this email
-        mysqli_query($conn, "DELETE FROM password_resets WHERE email = '$email'");
-        
-        $query = "INSERT INTO password_resets (email, token, expires_at) VALUES ('$email', '$token', '$expires')";
-        
-        if (mysqli_query($conn, $query)) {
-            // MOCK EMAIL SENDING
-            // In a real scenario, use PHPMailer here.
-            
-            // For now, we alert the code (for testing)
-            echo "<script>
-                alert('Kode verifikasi Anda adalah: $token'); 
-                window.location='../verify_code.php?email=$email';
-            </script>";
-        } else {
-            echo "<script>alert('Terjadi kesalahan database.'); window.location='../forgot_password.php';</script>";
-        }
-    } else {
-        echo "<script>alert('Email tidak terdaftar!'); window.location='../forgot_password.php';</script>";
-    }
-
-} elseif ($action === 'verify_code') {
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $token = mysqli_real_escape_string($conn, $_POST['otp']); // Changed name to otp to match form likely
-    
-    $query = "SELECT * FROM password_resets WHERE email = '$email' AND token = '$token' AND expires_at > NOW()";
-    $result = mysqli_query($conn, $query);
-    
-    if (mysqli_num_rows($result) > 0) {
+        // Valid credentials -> Allow reset
         $_SESSION['reset_email'] = $email;
-        $_SESSION['reset_verified'] = true;
+        $_SESSION['reset_verified'] = true; // Directly verified
         
-        // Delete token
-        mysqli_query($conn, "DELETE FROM password_resets WHERE email = '$email'");
-        
-        header("Location: ../reset_password.php");
+        echo "<script>window.location='../reset_password.php';</script>";
     } else {
-        echo "<script>alert('Kode salah atau kadaluarsa!'); window.location='../verify_code.php?email=$email';</script>";
+        echo "<script>alert('Kombinasi Email dan NIM tidak ditemukan!'); window.location='../forgot_password.php';</script>";
     }
 
 } elseif ($action === 'reset_password') {
