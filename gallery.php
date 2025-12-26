@@ -122,7 +122,6 @@ $result = mysqli_query($conn, $query);
                 
                 <div class="detail-box">
                     Ditemukan: <span id="modalDate"></span><br>
-                    Waktu: <span id="modalTime">Waiting...</span> (Static)
                 </div>
 
                 <div class="detail-box">
@@ -149,7 +148,14 @@ $result = mysqli_query($conn, $query);
             // Format simple description list
             document.getElementById('modalDesc').innerHTML = `<li>${item.description}</li>`;
             
-            document.getElementById('modalDate').innerText = item.found_date;
+            // Format Date dd/mm/yyyy
+            if (item.found_date) {
+                let parts = item.found_date.split('-');
+                let formattedDate = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                document.getElementById('modalDate').innerText = formattedDate;
+            } else {
+                document.getElementById('modalDate').innerText = '-';
+            }
             document.getElementById('modalLocation').innerText = item.location;
             document.getElementById('modalReporter').innerText = item.pelapor_name; // Need join for this
             document.getElementById('modalContact').innerText = item.contact_phone;

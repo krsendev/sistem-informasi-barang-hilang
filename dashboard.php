@@ -63,7 +63,7 @@ $result = mysqli_query($conn, $query);
                                 <ul>
                                     <li><b>Deskripsi:</b> <?= htmlspecialchars($item['description']) ?></li>
                                     <li><b>Lokasi:</b> <?= htmlspecialchars($item['location']) ?></li>
-                                    <li><b>Tanggal:</b> <?= htmlspecialchars($item['found_date']) ?></li>
+                                    <li><b>Tanggal:</b> <?= date('d/m/Y', strtotime($item['found_date'])) ?></li>
                                     <li><b>Kontak:</b> <?= htmlspecialchars($item['contact_phone']) ?></li>
                                 </ul>
                             </div>
