@@ -1,19 +1,11 @@
 <?php
 require '../config/db.php';
 
-$table = 'users';
-$column = 'profile_image';
+$sql = file_get_contents('../database/update_schema.sql');
 
-$check = mysqli_query($conn, "SHOW COLUMNS FROM $table LIKE '$column'");
-
-if (mysqli_num_rows($check) == 0) {
-    $alter = "ALTER TABLE $table ADD COLUMN $column VARCHAR(255) DEFAULT NULL";
-    if (mysqli_query($conn, $alter)) {
-        echo "Column '$column' added successfully to table '$table'.";
-    } else {
-        echo "Error adding column: " . mysqli_error($conn);
-    }
+if (mysqli_multi_query($conn, $sql)) {
+    echo "Database updated successfully.";
 } else {
-    echo "Column '$column' already exists.";
+    echo "Error updating database: " . mysqli_error($conn);
 }
 ?>

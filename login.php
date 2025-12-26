@@ -18,10 +18,8 @@ if (isset($_SESSION['user'])) {
 
     <div class="auth-card">
         <div class="auth-header">
-            <!-- Placeholder for Logo -->
             <div style="font-size: 24px; font-weight: bold; color: var(--primary-blue); margin-bottom: 10px;">UMSIDA</div>
             <div style="width: 80px; height: 80px; background: var(--secondary-blue, #2d4059); border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
-                 <!-- Icon User/Lock placeholder -->
                  <span style="font-size: 40px;">🔒</span>
             </div>
         </div>
@@ -38,7 +36,7 @@ if (isset($_SESSION['user'])) {
             </div>
 
             <div style="text-align: right; margin-bottom: 20px;">
-                <a href="#" style="color: #666; font-size: 0.8rem; text-decoration: none;">Lupa Password?</a>
+                <a href="forgot_password.php" style="color: #666; font-size: 0.8rem; text-decoration: none;">Lupa Password?</a>
             </div>
 
             <button type="submit" class="btn-primary" style="width: 100%;">Login</button>

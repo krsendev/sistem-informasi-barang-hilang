@@ -15,11 +15,8 @@ if (!isset($_SESSION['user'])) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- FontAwesome for icons (optional, using simple chars for now if no net) -->
 </head>
 <body>
-
-    <!-- Header -->
     <header class="header">
         <div class="logo-container" onclick="openNav()">
             <span style="font-size: 30px; cursor: pointer;">&#9776;</span> <!-- Hamburger -->
@@ -37,7 +34,6 @@ if (!isset($_SESSION['user'])) {
         </div>
     </header>
 
-    <!-- Sidebar -->
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         
