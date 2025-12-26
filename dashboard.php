@@ -43,7 +43,6 @@ $result = mysqli_query($conn, $query);
         <div style="padding: 10px;">
             <?php while($item = mysqli_fetch_assoc($result)): ?>
                 <div class="procedure-card" style="background: white; border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; display: flex; align-items: start; gap: 15px;">
-                     <!-- Left Border Stripe for Type -->
                      <div style="width: 5px; height: 100px; background-color: <?= $item['type'] == 'found' ? 'green' : 'red' ?>; border-radius: 5px;"></div>
                      
                      <div style="flex-grow: 1;">

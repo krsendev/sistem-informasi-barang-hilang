@@ -23,6 +23,9 @@ if (isset($_SESSION['user'])) {
         </div>
 
         <div class="auth-card">
+            <div class="auth-header">
+                <h3>LOGIN</h3>
+            </div>
             
             <form action="process/auth.php" method="POST">
                 <input type="hidden" name="action" value="login">

@@ -23,8 +23,7 @@ if (!isset($_SESSION['user'])) {
         </div>
         
         <div class="logo-text">
-            UMSIDA
-            <!-- <div style="font-size: 0.6rem; font-weight: normal; letter-spacing: 1px;">DAN PENCARIAN BARANG</div> -->
+            <img src="assets/images/logo-umsida.png" alt="UMSIDA" style="max-height: 50px;">
         </div>
 
         <div class="header-icons">
